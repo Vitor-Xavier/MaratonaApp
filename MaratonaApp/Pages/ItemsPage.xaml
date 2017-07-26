@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MaratonaApp.Controls;assembly:MaratonaApp"
+             x:Class="MaratonaApp.Pages.ItemsPage"
+             BackgroundColor="White"
+             Title="{Binding Cart.Name}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Salvar" Order="Primary" Priority="0" Command="{Binding SaveCartCommand}" Icon="ic_save_white_24dp.png"/>
+        <ToolbarItem Text="Atualizar" Order="Secondary" Priority="1" Command="{Binding SaveCartCommand}" Icon="ic_refresh_white_24dp.png"/>
+        <ToolbarItem Text="Deletar" Order="Secondary" Priority="2" Command="{Binding DeleteCartCommand}" Icon="ic_delete_white_24dp.png"/>
+    </ContentPage.ToolbarItems>
+    
+    <StackLayout>
+        <StackLayout Padding="16" BackgroundColor="DarkCyan">
+            <StackLayout Orientation="Horizontal">
+                <StackLayout HorizontalOptions="FillAndExpand" Margin="0, 0, 15, 0">
+                    <Entry Placeholder="Titulo da compra" 
+                           PlaceholderColor="{StaticResource hint}" 
+                           Text="{Binding Cart.Name}" 
+                           TextColor="{StaticResource textColor}" 
+                           BackgroundColor="Transparent"/>
+                    <DatePicker MinimumDate="{Binding MinDate}" 
+                                Date="{Binding Cart.PlannedFor}" 
+                                TextColor="{StaticResource textColor}" 
+                                BackgroundColor="Transparent"/>
+                </StackLayout>
+                <Switch IsToggled="{Binding Cart.Completed}" HorizontalOptions="Center" />
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal">
+                <Entry Placeholder="Item" Text="{Binding ItemText}" 
+                       PlaceholderColor="{StaticResource hint}" 
+                       TextColor="{StaticResource textColor}" 
+                       HorizontalOptions="FillAndExpand"
+                       BackgroundColor="Transparent"/>
+                <Button Text="+" TextColor="{StaticResource textColor}" 
+                        BackgroundColor="Transparent" 
+                        FontSize="Large" 
+                        Command="{Binding AddItemCommand}" 
+                        BorderRadius="1" 
+                        BorderWidth="1" 
+                        BorderColor="DarkCyan"/>
+            </StackLayout>
+            
+        </StackLayout>
+        <controls:CustomListView x:Name="listView" HasUnevenRows="True" Margin="10" ItemsSource="{Binding Items}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <SwitchCell x:Name="viewCell" 
+                                Text="{Binding Name}" 
+                                On="{Binding Done}" 
+                                OnChanged="SwitchCell_OnChanged_1">
+                        <SwitchCell.ContextActions>
+                            <MenuItem Text="Deletar"
+                                      BindingContext="{Binding Source={x:Reference listView}, Path=BindingContext}"
+                                      Command="{Binding DeleteCommand}"
+                                      CommandParameter="{Binding Source={x:Reference viewCell}, Path=BindingContext}" />
+                        </SwitchCell.ContextActions>
+                    </SwitchCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </controls:CustomListView>
+        
+    </StackLayout>
+    
+</ContentPage>

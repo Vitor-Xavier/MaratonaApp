@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MaratonaApp.Pages.AboutPage"
+             Title="Sobre">
+
+    <TableView Intent="Menu" Margin="20, 0, 20, 0">
+        <TableRoot>
+            <TableSection Title="Versão">
+                <TextCell Text="1.0.1" Detail="Alpha"/>
+            </TableSection>
+            <TableSection Title="Termos de uso">
+                <SwitchCell Text="Aceito os termos de uso" On="True"/>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+    
+</ContentPage>

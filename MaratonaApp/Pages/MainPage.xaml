@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MaratonaApp"
+             xmlns:controls="clr-namespace:MaratonaApp.Controls;assembly:MaratonaApp"
+             x:Class="MaratonaApp.Pages.MainPage"
+             Title="Listas de Compras"
+             BackgroundColor="White">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Adicionar"   Order="Primary"     Priority="0" Command="{Binding NewCartCommand}" Icon="ic_add_shopping_cart_white_24dp.png"/>
+        <ToolbarItem Text="Atualizar"   Order="Secondary"   Priority="1" Command="{Binding UpdateCommand}" Icon="ic_refresh_white_24dp.png"/>
+        <ToolbarItem Text="Sobre"       Order="Secondary"   Priority="2" Command="{Binding AboutCommand}"/>
+        <ToolbarItem Text="Logout"      Order="Secondary"   Priority="3" Command="{Binding LogoutCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout>
+        <!--<SearchBar Placeholder="Pesquisa..."/>-->
+
+        <StackLayout Orientation="Horizontal" BackgroundColor="DarkCyan" Padding="16">
+            <StackLayout HorizontalOptions="FillAndExpand" Margin="0, 0, 15, 0">
+                <Entry Placeholder="Titulo da compra" 
+                       PlaceholderColor="{StaticResource hint}" 
+                       Text="{Binding Cart.Name}" 
+                       TextColor="{StaticResource textColor}" 
+                       BackgroundColor="Transparent"/>
+                <DatePicker MinimumDate="{Binding MinDate}" 
+                            Date="{Binding Cart.PlannedFor}" 
+                            TextColor="{StaticResource textColor}" 
+                            BackgroundColor="Transparent"/>
+            </StackLayout>
+            <Switch IsToggled="{Binding Cart.Completed}"/>
+        </StackLayout>
+        <controls:CustomListView x:Name="listView" 
+                                 ItemsSource="{Binding Carts}"  
+                                 HasUnevenRows="True" 
+                                 ItemTappedCommand="{Binding CartCommand}" 
+                                 IsRefreshing="{Binding IsLoading}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell x:Name="viewCell">
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Editar"
+                                      BindingContext="{Binding Source={x:Reference listView}, Path=BindingContext}"
+                                      Command="{Binding CartCommand}"
+                                      CommandParameter="{Binding Source={x:Reference viewCell}, Path=BindingContext}" />
+                            <MenuItem Text="Deletar"
+                                      BindingContext="{Binding Source={x:Reference listView}, Path=BindingContext}"
+                                      Command="{Binding DeleteCommand}"
+                                      CommandParameter="{Binding Source={x:Reference viewCell}, Path=BindingContext}" />
+                        </ViewCell.ContextActions>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                <Label Text="{Binding Name}" 
+                                           TextColor="Black" 
+                                           FontAttributes="Bold" 
+                                           FontSize="Small"/>
+                                <Label Text="{Binding PlannedFor, StringFormat='{0:dd/MM/yyyy}'}" 
+                                           TextColor="Gray" 
+                                           FontSize="Small"/>
+                            </StackLayout>
+                            <Switch IsToggled="{Binding Completed}" Toggled="Switch_Toggled"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </controls:CustomListView>
+    </StackLayout>
+
+</ContentPage>
