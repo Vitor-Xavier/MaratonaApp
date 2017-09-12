@@ -1,6 +1,6 @@
 # MaratonaApp
-Aplicativo em Xamarin, para conclusão da Maratona Xamarin Intermediário.
+Aplicativo em Xamarin como requisito para a conclusão do curso Maratona Xamarin Intermediário.
 
 # Sobre o App
-Aplicativo para planejamento básico de compras, com login via Facebook, e registro para recebimento de notificações.
+Aplicativo para planejamento básico de compras, com login via Facebook, e registro de dispositivo para recebimento de notificações.
 
